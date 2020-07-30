@@ -1,14 +1,12 @@
-import React from 'react';
-import './App.css';
-import Formik from './formik/Formik'
+import React from "react";
+import "./App.css";
+import FormikFile from "./formik/Formik";
 function App() {
   return (
     <div className="App">
-<Formik/>
+      <FormikFile />
     </div>
   );
 }
 
 export default App;
-  
-

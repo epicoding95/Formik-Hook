@@ -1,44 +1,50 @@
 import React from "react";
-import { useFormik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import classes from "./Formik.module.css";
-export default function Formik() {
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      channel: "",
-    },
-  });
 
+const initialValues = {
+  name: "",
+  email: "",
+  channel: "",
+};
+const onSubmit = (values) => {
+  console.log(values);
+};
+
+const validationSchema = Yup.object({
+  name: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email format").required("Required"),
+  channel: Yup.string().required("Required"),
+});
+export default function FormikFile() {
   return (
-    <div className={classes.Container}>
-      <form className={classes.Container__Form}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          onChange={formik.handleChange}
-          value={formik.values.name}
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          email="email"
-          id="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-        <label htmlFor="channel">Channel</label>
-        <input
-          type="text"
-          name="channel"
-          id="channel"
-          onChange={formik.handleChange}
-          value={formik.values.channel}
-        />
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      <Form>
+        <div className={classes.Container__Form__Control}>
+          <label htmlFor="name">Name</label>
+          <Field type="text" name="name" id="name" />
+          <ErrorMessage name="name" />
+        </div>
+
+        <div className={classes.Container__Form__Control}>
+          <label htmlFor="email">Email</label>
+          <Field type="text" name="email" id="email" />
+          <ErrorMessage name="email" />
+        </div>
+
+        <div className={classes.Container__Form__Control}>
+          <label htmlFor="channel">Channel</label>
+          <Field type="text" name="channel" id="channel" />
+          <ErrorMessage name="channel" />
+        </div>
+
         <button>Submit</button>
-      </form>
-    </div>
+      </Form>
+    </Formik>
   );
 }
